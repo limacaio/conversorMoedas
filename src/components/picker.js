@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
-import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 
-export default function PickerUI (){
+export default function PickerUI(props) {
 
-    const [moedaSelecionada, setMoedaSelecionada] = useState();
     return (
-         <Picker
-             selectedValue={moedaSelecionada}
-             onValueChange={(itemValue, itemIndex) =>setMoedaSelecionada(itemValue)}
-         >
-             <Picker.Item key={0} value={'USD'} label={'USD'} />
-             <Picker.Item key={1} value={'EUR'} label={'EUR'} />
- 
-         </Picker>
+        <RNPickerSelect
+            //placeholder={placeholder}
+            onValueChange={(value) => props.onChange(value)}
+            items={props.moedas}
+        />
     );
 }
