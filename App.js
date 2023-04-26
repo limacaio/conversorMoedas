@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, Alert, Keyboard, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { ActivityIndicator, Keyboard, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 import Picker from './src/components/picker';
 import styles from './src/components/styles';
 import api from './src/services/api';
@@ -34,7 +34,6 @@ export default function App() {
     CarregaMoedas();
   }, []);
 
-
   async function converter() {
     if (moedaSelecionada === null || valorPConverter === 0) {
       alert("Selecione uma moeda!");
@@ -53,7 +52,6 @@ export default function App() {
     //fechando o teclado
     Keyboard.dismiss();
   }
-
 
   if (loading) {
     return (
