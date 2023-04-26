@@ -1,2 +1,2 @@
 # conversorMoedas
- conversor de moedas utlizando api
+ Conversor de moedas em react native utlizando AwesomeAPI e biblioteca axios
