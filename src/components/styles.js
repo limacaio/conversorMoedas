@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     },
     areaResultado: {
         width: '90%',
-        height:80,
+        height:'auto',
         backgroundColor: '#ffff',
         justifyContent: 'center',
         alignItems: 'center',
@@ -72,10 +72,15 @@ const styles = StyleSheet.create({
     },
     txtResultado: {
         fontSize: 40,
-        color: '#121212',
-        
+        color: '#FF3232',
+        paddingBottom:15
+    },
+    txtResultado01: {
+        fontSize: 40,
+        color: 'green',
+    },
 
-    }
+
 
 
 });

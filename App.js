@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { ActivityIndicator, Alert, Keyboard, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 import Picker from './src/components/picker';
 import styles from './src/components/styles';
 import api from './src/services/api';
@@ -11,6 +11,9 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [moedaSelecionada, setMoedaSelecionada] = useState(null);
   const [valorPConverter, setValorPConverter] = useState(0);
+
+  const [valorMoeda, setValorMoeda] = useState(null);
+  const [valorConvertido, setValorConvertido] = useState(0);
 
   useEffect(() => {
     async function CarregaMoedas() {
@@ -31,6 +34,27 @@ export default function App() {
     CarregaMoedas();
   }, []);
 
+
+  async function converter() {
+    if (moedaSelecionada === null || valorPConverter === 0) {
+      alert("Selecione uma moeda!");
+     
+      return;
+    }
+    //fazendo a requisição
+    const response = await api.get(`all/${moedaSelecionada}-BRL`);
+    //console.log(response.data[moedaSelecionada].ask);
+
+    //fazendo o calculo
+    let resultado = (response.data[moedaSelecionada].ask * parseFloat(valorPConverter));
+    setValorConvertido(`R$${resultado.toFixed(2)}`);
+    setValorMoeda(valorPConverter);
+
+    //fechando o teclado
+    Keyboard.dismiss();
+  }
+
+
   if (loading) {
     return (
       //MONTANDO ICONE DE LOADING
@@ -44,7 +68,7 @@ export default function App() {
 
         <View style={styles.areaMoeda}>
           <Text style={styles.txtTitulo}> Selecione sua Moeda</Text>
-          <Picker moedas={moeda} onChange={(moeda)=>setMoedaSelecionada(moeda)} />
+          <Picker moedas={moeda} onChange={(moeda) => setMoedaSelecionada(moeda)} />
         </View>
 
         {/*============================================================ */}
@@ -60,14 +84,17 @@ export default function App() {
         </View>
         {/*============================================================ */}
         {/*============================================================ */}
-        <TouchableOpacity style={styles.botaoArea}>
+        <TouchableOpacity style={styles.botaoArea} onPress={converter}>
           <Text style={styles.botaoText}>CONVERTER</Text>
         </TouchableOpacity>
         {/*============================================================ */}
         {/*============================================================ */}
-        <View style={styles.areaResultado}>
-          <Text style={styles.txtResultado}> resultado </Text>
-        </View>
+        {valorConvertido !== 0 && (
+          <View style={styles.areaResultado}>
+            <Text style={styles.txtResultado }> {valorMoeda} {moedaSelecionada} </Text>
+            <Text style={styles.txtResultado01}> {valorConvertido} </Text>
+          </View>
+        )}
 
       </View>
     );
